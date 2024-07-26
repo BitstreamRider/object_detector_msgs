@@ -28,6 +28,7 @@ add_service_files(FILES
   stop.srv
   detectron2_service_server.srv
   estimate_poses.srv
+  estimate_pointing_gesture.srv
   refine_poses.srv
   get_poses.srv
   estimate_poses_st.srv
