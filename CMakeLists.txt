@@ -18,6 +18,7 @@ add_message_files(
   Detection.msg
   Detections.msg
   PoseWithConfidence.msg
+  Pose3DBBoxWithConfidence.msg
   PoseStWithConfidence.msg
   Plane.msg
 )
@@ -28,6 +29,7 @@ add_service_files(FILES
   stop.srv
   detectron2_service_server.srv
   estimate_poses.srv
+  estimate_poses_3dbbox.srv
   estimate_pointing_gesture.srv
   refine_poses.srv
   get_poses.srv
