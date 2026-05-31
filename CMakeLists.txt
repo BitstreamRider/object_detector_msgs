@@ -1,62 +1,56 @@
-cmake_minimum_required(VERSION 2.4.6)
+cmake_minimum_required(VERSION 3.8)
 project(object_detector_msgs)
 
-# Get the information about this package's buildtime dependencies
-find_package(catkin REQUIRED
-  COMPONENTS 
-  message_generation 
-  std_msgs 
-  actionlib_msgs 
-  sensor_msgs
-  vision_msgs
-)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-# Declare the message files to be built
-add_message_files(
-  FILES
-  BoundingBox.msg
-  Detection.msg
-  Detections.msg
-  PoseWithConfidence.msg
-  Pose3DBBoxWithConfidence.msg
-  PoseStWithConfidence.msg
-  Plane.msg
-)
+# find dependencies
+find_package(ament_cmake REQUIRED)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(vision_msgs REQUIRED)
+find_package(action_msgs REQUIRED)
 
-# Declare the service files to be built
-add_service_files(FILES
-  start.srv
-  stop.srv
-  detectron2_service_server.srv
-  estimate_poses.srv
-  estimate_poses_3dbbox.srv
-  estimate_pointing_gesture.srv
-  refine_poses.srv
-  get_poses.srv
-  estimate_poses_st.srv
-  refine_poses_st.srv
-  get_poses_st.srv
-  addBoxes.srv
-  VisualizePoseEstimation.srv
-)
 
-add_action_files(FILES
-  CheckForDetections.action
-  GenericImgProcAnnotator.action
-)
+# Generate messages, services, and actions
+rosidl_generate_interfaces(${PROJECT_NAME}
+  msg/BoundingBox.msg
+  msg/Detection.msg
+  msg/Detections.msg
+  msg/PoseWithConfidence.msg
+  msg/Pose3DBBoxWithConfidence.msg
+  msg/PoseStWithConfidence.msg
+  msg/Plane.msg
 
-generate_messages(
+  srv/Start.srv
+  srv/Stop.srv
+  srv/Detectron2ServiceServer.srv
+  srv/EstimatePoses.srv
+  srv/EstimatePoses3DBBox.srv
+  srv/EstimatePointingGesture.srv
+  srv/RefinePoses.srv
+  srv/GetPoses.srv
+  srv/EstimatePosesSt.srv
+  srv/RefinePosesSt.srv
+  srv/GetPosesSt.srv
+  srv/AddBoxes.srv
+  srv/VisualizePoseEstimation.srv
+
+  action/CheckForDetections.action
+  action/GenericImgProcAnnotator.action
+
   DEPENDENCIES
-  actionlib_msgs
-  sensor_msgs
-  std_msgs
-  vision_msgs
+    std_msgs
+    sensor_msgs
+    vision_msgs
+    action_msgs
 )
 
-# Declare that this catkin package's runtime dependencies
-catkin_package(
-  CATKIN_DEPENDS 
-  std_msgs 
-  sensor_msgs
-)
+ament_export_dependencies(rosidl_default_runtime)
+ament_export_include_directories(include)
 
+ament_package()
